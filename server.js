@@ -14,7 +14,9 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
-require("./routes")(app)
+require("./apiRoutes")(app)
+require("./htmlRoutes")(app)
+
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitnesstrackerdb", { useNewUrlParser: true })
 
