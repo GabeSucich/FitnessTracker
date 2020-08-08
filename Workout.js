@@ -12,16 +12,26 @@ exercises: {
 day: {
     type: Number,
     default: Date.now
+},
+
+totalDuration:  {
+    type: Number,
+    default: 0
 }
 
 })
 
 WorkoutSchema.methods.setTotalDuration = function(){
-    this.TotalDuration = this.exercises.reduce(function(acc, curr) {
-        acc += curr.duration
-    }, 0)
 
-    return this.TotalDuration
+    console.log("Runnin set duration")
+    for (const exercise of this.exercises) {
+        console.log(exercise)
+        this.totalDuration += exercise.duration
+    }
+    console.log("made it this far")
+    console.log(this.totalDuration)
+    return this.totalDuration
+
 }
 
 const Workout = mongoose.model("Workout", WorkoutSchema)
