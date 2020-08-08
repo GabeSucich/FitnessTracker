@@ -33,19 +33,27 @@ module.exports = function (app) {
 
     app.get("/api/workouts/range", (req, res) => {
         Workout.find().then(data => {
-            var range = findRange(data)
-            res.json(range)
+            res.json(data)
         })        
     })
 
     function findRange(workouts) {
         workoutRange = []
-        for (i=workouts.length - 1; i>=0; i--) {
-            workoutRange.unshift(workouts[i])
-            if (new Date(workouts[i].day).getDay() === 0) {
-                break
+        const emptyWorkout = {
+            exercises : [],
+            totalDuration: 0
+        }
+        var dayOfWeek = new Date(Date.now()).getDay()
+        console.log
+        for (i=0; i<= dayOfWeek; i++) {
+            if (workouts[i]) {
+                workoutRange.unshift(workouts[i])
+            }
+            else {
+                workoutRange.unshift(emptyWorkout)
             }
         }
+        console.log(workoutRange)
         return workoutRange
     }
 }
